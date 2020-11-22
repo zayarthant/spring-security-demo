@@ -27,7 +27,7 @@ public class CustormUserDetailsService implements UserDetailsService {
         Optional<Student> optionalStudent = studentRepository.findByEmail(email);
         if(optionalStudent.isPresent()){
             Student student = optionalStudent.get();
-            userDetailInfo = new UserDetailInfo(student.getName(),student.getPassword(), student.getRole());
+            userDetailInfo = new UserDetailInfo(student);
         }
         return userDetailInfo;
     }

@@ -1,40 +1,36 @@
 package com.prodev.httpbasicsecurity.pojo;
 
+import com.prodev.httpbasicsecurity.entity.Student;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 public class UserDetailInfo implements UserDetails {
 
-    private String username;
+    @Getter
+    private Student student;
 
-    private String password;
-
-    private List<SimpleGrantedAuthority> authorityList;
-
-    public UserDetailInfo(String username, String password, String role) {
-        this.username = username;
-        this.password = password;
-        this.authorityList = Arrays.asList(new SimpleGrantedAuthority(role));
+    public UserDetailInfo(Student student) {
+        this.student = student;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorityList;
+        return Arrays.asList(new SimpleGrantedAuthority(this.student.getRole()));
     }
 
     @Override
     public String getPassword() {
-        return this.password;
+        return this.student.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.student.getEmail();
     }
 
     @Override

@@ -27,12 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic()
+                .and().cors()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()
-                .cors()
-                .and().authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/master").hasAuthority("ADMIN")
                 .antMatchers("/staff").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/student/login").fullyAuthenticated()
                 .anyRequest().permitAll();
     }
 }
